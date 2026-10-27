@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: petrescue-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: petrescue
+  template:
+    metadata:
+      labels:
+        app: petrescue
+    spec:
+      containers:
+        - name: petrescue
+          image: dbhavana/pet-rescue-app:new
+          ports:
+            - containerPort: 5001
