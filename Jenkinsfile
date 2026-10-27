@@ -10,10 +10,10 @@ pipeline {
         stage('Run Selenium Tests') {
             steps {
                 echo "Run Selenium Tests"
-                bat 'python3 -m pip install -r requirements.txt'
-                bat 'python3 app.py &'
+                bat 'python -m pip install -r requirements.txt'
+                bat 'python app.py &'
                 bat 'sleep 5'
-                bat 'python3 -m pytest -v'
+                bat 'python -m pytest -v'
             }
         }
         stage('Docker Login') {
@@ -40,8 +40,8 @@ pipeline {
         }
     }
     post {
-        always {
-            bat 'pkill -f "python3 app.py" || true'
+       always {
+            bat(returnStatus: true, script: '''for /f "tokens=5" %%a in ('netstat -aon ^| findstr :5001 ^| findstr LISTENING') do taskkill /F /PID %%a''')
         }
         success {
             echo 'Pipeline completed successfully!'
