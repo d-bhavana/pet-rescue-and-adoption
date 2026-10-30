@@ -7,6 +7,28 @@ pipeline {
                 bat "docker build -t petrescue:v1 ."
             }
         }
+
+
+        stage('Diagnose Python') {
+    steps {
+        bat '''
+            @echo on
+            echo Checking Python location...
+            where python
+
+            echo Checking Python executable...
+            python --version
+
+            echo Checking Python launcher...
+            where py
+            py --version
+
+            echo Checking pip...
+            where pip
+            pip --version
+        '''
+    }
+}
         stage('Run Selenium Tests') {
             steps {
                 echo "Run Selenium Tests"
