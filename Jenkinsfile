@@ -10,7 +10,7 @@ pipeline {
         stage('Run Selenium Tests') {
             steps {
                 echo "Run Selenium Tests"
-                bat 'python -m pip install -r requirements.txt'
+                bat 'pip install -r requirements.txt'
                 bat 'python app.py &'
                 bat 'sleep 5'
                 bat 'python -m pytest -v'
