@@ -10,15 +10,9 @@ pipeline {
 
 
      
-  stage('Run Tests') {
+ stage('Run Tests') {
     steps {
-        bat '''
-        docker run --rm petrescue:v1 sh -c "
-        python app.py &
-        sleep 5 &&
-        pytest -v
-        "
-        '''
+        bat 'docker run --rm petrescue:v1 sh -c "python app.py & sleep 5 && pytest -v"'
     }
 }
         stage('Docker Login') {
