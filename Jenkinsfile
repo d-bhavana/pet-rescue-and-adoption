@@ -9,35 +9,12 @@ pipeline {
         }
 
 
-        stage('Diagnose Python') {
+     
+        stage('Run Tests') {
     steps {
-        bat '''
-            @echo on
-            echo Checking Python location...
-            where python
-
-            echo Checking Python executable...
-            python --version
-
-            echo Checking Python launcher...
-            where py
-            py --version
-
-            echo Checking pip...
-            where pip
-            pip --version
-        '''
+        bat 'docker run --rm petrescue:v1 python -m pytest -v'
     }
 }
-        stage('Run Selenium Tests') {
-            steps {
-                echo "Run Selenium Tests"
-                bat 'pip install -r requirements.txt'
-                bat 'python app.py &'
-                bat 'sleep 5'
-                bat 'python -m pytest -v'
-            }
-        }
         stage('Docker Login') {
             steps {
                 withCredentials([usernamePassword(
